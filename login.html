@@ -1,0 +1,37 @@
+<!-- templates/login.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+ <div class="row text-center">
+         <div class="row" style="margin-top:100px;">
+<h3 class="title">Login</h3>
+<div class="box">
+    <form method="POST" action="/login">
+        <div class="field">
+            <div class="control">
+                <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="" size="40">
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <input class="input is-large" type="password" name="password" placeholder="Your Password" size="40">
+            </div>
+        </div>
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox">
+                Remember me
+            </label>
+        </div>
+        <button class="button is-block is-info is-large is-fullwidth" style="margin-top: 10px;  " >Login</button>
+    </form>
+</div>
+    <a href="{{ url_for('auth.signup') }}" >
+            Don't have an account?
+    </a>
+    
+</div>
+    </div>
+{% endblock %}
