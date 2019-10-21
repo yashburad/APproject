@@ -1,0 +1,48 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+</div>
+<div class="row">
+        <h3 style="text-align: center; margin-top: -20px; font-size: 3rem;">Orders</h3>
+        <table class="col-sm-12" style="margin-bottom: 30px; margin-top: 20px;">
+                <tr ><td class=" text-center"> Order Id</td> <td class="col-sm-4 text-center"> Image</td>
+               <td class="col-sm-4 text-center"> Product Name </td> 
+               <td class="col-sm-4 text-right"> Quantity </td> 
+               <td class="col-sm-4 text-right">Price</td> 
+            </tr> 
+            </table>
+        {% for itemData in data %}
+        <table class="col-sm-12" style="border:solid; border-left: 0px; border-right: 0px; border-top: 0px;
+        border-bottom: 2px;">
+            <tr > <td class=" text-center">{{itemData[4]}}</td> <td class="col-sm-4 float:left;"><img style="max-width: 200px;
+                max-height: 200px;
+                margin-left: 100px;" src="{{itemData[3]}}"></td> 
+           <td class="col-sm-4 text-right" style="font-size: 2rem;"><a href="/productdescription/{{itemData[0]}}">{{itemData[1]}}</a></td>             
+           <td class="rating col-sm-8">
+                <div class="stars">
+                        <form action="">
+                          <input class="star star-5" id="star-5" type="radio" name="star"/>
+                          <label class="star star-5" for="star-5"></label>
+                          <input class="star star-4" id="star-4" type="radio" name="star"/>
+                          <label class="star star-4" for="star-4"></label>
+                          <input class="star star-3" id="star-3" type="radio" name="star"/>
+                          <label class="star star-3" for="star-3"></label>
+                          <input class="star star-2" id="star-2" type="radio" name="star"/>
+                          <label class="star star-2" for="star-2"></label>
+                          <input class="star star-1" id="star-1" type="radio" name="star"/>
+                          <label class="star star-1" for="star-1"></label>
+                        </form>
+                      </div>         </td>
+           <td class="col-sm-4 text-right"> {{itemData[5]}} </td>  
+           <td class="col-sm-4 text-right">Rs.{{itemData[2]}}</td> 
+           
+        </tr> 
+        </table><hr size="30" black>
+        {% endfor %}
+</div>
+
+
+{% endblock %}
+

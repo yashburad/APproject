@@ -1,0 +1,21 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+</div>
+<div class="row">
+    <div class="col-sm-12 align-center">
+        <img class="col-sm-6" style="max-width: 300px; align-items: center;
+        max-height: 600px" src="{{product[3]}}">
+        <div class="col-sm-6" style="font-size: 2rem;">
+        <p  >{{product[1]}}</p>
+        <p>  Price: Rs{{product[2]}}</p>
+            <a href="/addToCart?productId={{product[0]}}"> Add to Cart </a>
+            <a href="/MovetoWishlist?productId={{product[0]}}"> Add to Wishlist </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

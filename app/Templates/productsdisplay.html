@@ -1,0 +1,31 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+</div>
+<div class="row">
+        <h3 style="margin-top: -20px;">Showing all products of Category: {{categoryName}}</h3>
+        <table class="col-sm-12" style="margin-bottom: 30px; margin-top: 20px;">
+                <tr > <td class="col-sm-4 text-center"> Image</td>
+               <td class="col-sm-4 text-right"> Description </td> 
+               <td class="col-sm-4 text-right">Price</td> 
+            </tr> 
+            </table>
+        {% for itemData in data %}
+        <table class="col-sm-12" style="border:solid; border-left: 0px; border-right: 0px; border-top: 0px;
+        border-bottom: 2px;">
+            <tr > <td class="col-sm-4 float:left;"><img style="max-width: 200px;
+                max-height: 200px;
+                margin-left: 100px;" src="{{itemData[3]}}"></td> 
+           <td class="col-sm-4 text-right" style="font-size: 2rem;"><a href="/productdescription/{{itemData[0]}}">{{itemData[1]}} </a></td> 
+           <td class="col-sm-4 text-right">Rs.{{itemData[2]}}</td> 
+           <td>{{itemData[4]}}</td> 
+        </tr> 
+        </table><hr size="30" black>
+        {% endfor %}
+</div>
+
+
+{% endblock %}
+
