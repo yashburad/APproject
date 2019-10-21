@@ -84,6 +84,7 @@ def login():
     auth_url, state = google.authorization_url(
         Auth.AUTH_URI, access_type='offline', prompt="select_account")
     session['oauth_state'] = state
+    print(state)
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -324,7 +325,7 @@ def RemovetoWishlist():
     conn.close()
     return redirect(url_for('wishlist'))
 
-@app.route('/gCallback')
+@app.route('/gCallback', methods=["GET"])
 def callback():
     # Redirect user to home page if already logged in.
     if current_user is not None and current_user.is_authenticated:
@@ -340,8 +341,11 @@ def callback():
     else:
         # Execution reaches here when user has
         # successfully authenticated our app.
-        print(session['oauth_state'])
-        google = get_google_auth(state=session['oauth_state'])
+        google = get_google_auth()
+        auth_url, state = google.authorization_url(
+        Auth.AUTH_URI, access_type='offline', prompt="select_account")
+        print(state)
+        google = OAuth2Session(Auth.CLIENT_ID, state=state)
         try:
             token = google.fetch_token(
                 Auth.TOKEN_URI,
