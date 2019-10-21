@@ -1,11 +1,12 @@
 from flask import Flask
-from config import Config
+# from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from requests_oauthlib import OAuth2Session
 from requests.exceptions import HTTPError
+from flask_mail import Mail
 
 class Auth:
     """Google Project Credentials"""
@@ -24,6 +25,18 @@ db = SQLAlchemy(app)
 bcrypt=Bcrypt(app)
 login_manager= LoginManager(app)
 login_manager.login_view ='login'
+
+app.config.update(dict(
+    MAIL_SERVER="smtp.googlemail.com",
+    MAIL_PORT=587,
+    MAIL_USE_TLS=1,
+    MAIL_USERNAME="systems.quadcore@gmail.com",
+    MAIL_PASSWORD="Quadcore00",
+    ADMINS = ["systems.quadcore@gmail.com"]
+))
+
+
+mail = Mail(app)
 
 
 from app import routes, models

@@ -8,6 +8,9 @@ from requests_oauthlib import OAuth2Session
 from requests.exceptions import HTTPError
 import os
 import json
+from app.forms import ResetPasswordRequestForm
+from app.emailPasswordReset import send_password_reset_email
+from app.forms import ResetPasswordForm
 
 class Auth:
     """Google Project Credentials"""
@@ -34,7 +37,7 @@ def noOfItem():
         return item
     else:
         return 0
-    
+
 
 @app.route('/')
 @app.route('/index')
@@ -45,7 +48,7 @@ def index():
 @app.route('/analogue')
 def analogue():
     noOfItems=noOfItem()
-    
+
     with sqlite3.connect('app/site.db') as conn:
             cur = conn.cursor()
             cur.execute("SELECT products.productId, products.name, products.price, products.image FROM products WHERE products.categoryId = '1'")
@@ -82,7 +85,7 @@ def login():
         Auth.AUTH_URI, access_type='offline', prompt="select_account")
     session['oauth_state'] = state
     form = LoginForm()
-    if form.validate_on_submit(): 
+    if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
@@ -370,7 +373,38 @@ def get_google_auth(state=None, token=None):
         return OAuth2Session(Auth.CLIENT_ID, token=token)
     if state:
         return OAuth2Session(Auth.CLIENT_ID,state=state,redirect_uri=Auth.REDIRECT_URI)
-        
+
     oauth = OAuth2Session(Auth.CLIENT_ID,redirect_uri=Auth.REDIRECT_URI,scope=Auth.SCOPE)
 
     return oauth
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',
+                           title='Reset Password', form=form)
+
+
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', title = 'Reset Password', form=form)
