@@ -1,5 +1,5 @@
 from datetime import datetime
-from app import db , login_manager
+from app import app, db , login_manager, bcrypt
 from flask_login import UserMixin
 from time import time
 import jwt
