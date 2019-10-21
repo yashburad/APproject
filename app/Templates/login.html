@@ -9,7 +9,7 @@
 <div class="box">
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        
+
         {{ form.email.label(class="form-control-label") }}
         {% if form.email.errors %}
             {{ form.email(class="form-control form-control-lg is-invalid") }}
@@ -21,7 +21,7 @@
         {% else %}
             {{ form.email(class="form-control form-control-lg") }}
         {% endif %}
-        
+
         <div style="margin-top: 10px;">
         {{ form.password.label(class="form-control-label") }}
         {% if form.password.errors %}
@@ -46,7 +46,10 @@
     <a href="{{ url_for('signup') }}"  >
             Don't have an account?
     </a>
-    
+    <p>
+        Forgot Your Password?
+        <a href="{{ url_for('reset_password_request') }}">Click to Reset It</a>
+    </p>
 </div>
     </div>
 {% endblock %}
