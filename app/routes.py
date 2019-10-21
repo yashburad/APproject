@@ -337,6 +337,7 @@ def callback():
     else:
         # Execution reaches here when user has
         # successfully authenticated our app.
+        print(session['oauth_state'])
         google = get_google_auth(state=session['oauth_state'])
         try:
             token = google.fetch_token(
