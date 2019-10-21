@@ -48,7 +48,7 @@ def analogue():
     
     with sqlite3.connect('app/site.db') as conn:
             cur = conn.cursor()
-            cur.execute("SELECT products.productId, products.name, products.price, products.image FROM products WHERE products.categoryId = '1'")
+            cur.execute("SELECT products.productId, products.name, products.price, products.product_img FROM products WHERE products.categoryId = '1'")
             data = cur.fetchall()
     return render_template('productsdisplay.html', data= data, categoryName='Analogue', noOfItem=noOfItems)
 
@@ -57,7 +57,7 @@ def digital():
     noOfItems=noOfItem()
     with sqlite3.connect('app/site.db') as conn:
             cur = conn.cursor()
-            cur.execute("SELECT products.productId, products.name, products.price, products.image FROM products WHERE products.categoryId = '2'")
+            cur.execute("SELECT products.productId, products.name, products.price, products.product_img FROM products WHERE products.categoryId = '2'")
             data = cur.fetchall()
     return render_template('productsdisplay.html', data= data, categoryName='Digital', noOfItem=noOfItems)
 
@@ -180,7 +180,7 @@ def addToCart():
             cur.execute("SELECT id FROM user WHERE email = '" + current_user.email + "'")
             id = cur.fetchone()[0]
             # try:
-            cur.execute("SELECT products.productId, products.name, products.price, products.image FROM products WHERE products.productId=" + str(productId))
+            cur.execute("SELECT products.productId, products.name, products.price, products.product_img FROM products WHERE products.productId=" + str(productId))
             products=cur.fetchone()
             cur.execute("SELECT count(productId),quantity FROM cart WHERE productId = " + str(products[0]))
             count=cur.fetchone()
@@ -267,7 +267,7 @@ def orders():
             cur.execute("SELECT id FROM user WHERE email = '" + current_user.email + "'")
             id = cur.fetchone()[0]
             # try:
-            cur.execute("SELECT products.productId, products.name, products.price, products.image, orders.orderId, orders.quantity FROM products, orders WHERE products.productId = orders.productId AND orders.userId = " + str(current_user.id))
+            cur.execute("SELECT products.productId, products.name, products.price, products.product_img, orders.orderId, orders.quantity FROM products, orders WHERE products.productId = orders.productId AND orders.userId = " + str(current_user.id))
             products=cur.fetchall()
     conn.close()
     return render_template("order.html", data = products,  noOfItem=noOfItems)
@@ -299,7 +299,7 @@ def wishlist():
         cur = conn.cursor()
         cur.execute("SELECT id FROM user WHERE email = '" + current_user.email + "'")
         id = cur.fetchone()[0]
-        cur.execute("SELECT products.productId, products.name, products.price, products.image FROM products , wishlist WHERE products.productId=wishlist.productId AND wishlist.userId = " + str(id))
+        cur.execute("SELECT products.productId, products.name, products.price, products.product_img FROM products , wishlist WHERE products.productId=wishlist.productId AND wishlist.userId = " + str(id))
         products = cur.fetchall()
     return render_template("wishlist.html", data=products, noOfItem=noOfItems)
 

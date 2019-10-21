@@ -1,5 +1,4 @@
 from flask import Flask
-from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_bcrypt import Bcrypt
