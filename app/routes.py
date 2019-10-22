@@ -77,8 +77,9 @@ def productdescription(id):
     noOfItems=noOfItem()
     with sqlite3.connect('app/site.db') as conn:
             cur = conn.cursor()
-            cur.execute("SELECT productId, name, price, product_img FROM products WHERE productId = " +str(productId) )
+            cur.execute("SELECT productId, name, price, product_img,brand , family ,model ,produced ,materials ,glass ,diameter ,height ,wr ,color ,finish ,type ,display ,chronograph ,acoustic ,additional ,description, brand_img  FROM products WHERE productId = " +str(productId) )
             product=cur.fetchone()
+            print(product)
     conn.close()
     return render_template('productdescription.html' , product=product, noOfItem=noOfItems)
 
