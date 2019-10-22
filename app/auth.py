@@ -19,7 +19,7 @@ class OAuthSignIn(object):
         pass
 
     def get_callback_url(self):
-        return url_for('https://localhost:5000/gCallback',provider=self.provider_name,
+        return url_for('https://localhost:80/gCallback',provider=self.provider_name,
                         _external=True)
 
     @classmethod
@@ -50,7 +50,7 @@ class GoogleSignIn(OAuthSignIn):
         return redirect(self.service.get_authorize_url(
             scope='email',
             response_type='code',
-            redirect_uri='https://localhost:5000/gCallback/'+self.provider_name)
+            redirect_uri='https://localhost:80/gCallback/'+self.provider_name)
             )
 
     def callback(self):
@@ -59,7 +59,7 @@ class GoogleSignIn(OAuthSignIn):
         oauth_session = self.service.get_auth_session(
                 data={'code': request.args['code'],
                       'grant_type': 'authorization_code',
-                      'redirect_uri': 'https://localhost:5000/gCallback/google'
+                      'redirect_uri': 'https://localhost:80/gCallback/google'
                      },
                 decoder = json.loads
         )
