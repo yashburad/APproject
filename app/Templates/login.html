@@ -40,17 +40,15 @@
                     {{ form.remember.label(class="form-check-label") }}<br>
                 </div>
         {{ form.submit() }}
-        <a href="{{ url_for('oauth_authorize', provider='google') }}"><img src="{{ url_for('static', filename='/images/google_signin.png') }}" /></a>
+        <div style="margin-top:10px; "><a href="{{ url_for('oauth_authorize', provider='google') }}"><img style="height:40px; width:auto;"   src="static/images/google_signin.png" /></a></div>
     </form>
 </div>
     <a href="{{ url_for('signup') }}"  >
             Don't have an account?
     </a>
-    <p>
-
+<div>
         Forgot Your Password?
-        <a href="{{ url_for('reset_password_request') }}">Click to Reset It</a>   
-     </p>
+        <a href="{{ url_for('reset_password_request') }}">Click to Reset It</a>   </div>
 </div>
     </div>
 {% endblock %}
