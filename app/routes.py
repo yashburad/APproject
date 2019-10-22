@@ -193,7 +193,7 @@ def addToCart():
             # try:
             cur.execute("SELECT products.productId, products.name, products.price, products.product_img FROM products WHERE products.productId=" + str(productId))
             products=cur.fetchone()
-            cur.execute("SELECT count(productId),quantity FROM cart WHERE productId = " + str(products[0]))
+            cur.execute("SELECT count(productId),quantity FROM cart WHERE productId = '" + str(products[0])+"' AND userId="+str(id))
             count=cur.fetchone()
             cur.execute("DELETE FROM wishlist WHERE userId=" + str(id)+ " AND productId=" +str(productId))
             print(count)
