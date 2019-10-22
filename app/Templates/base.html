@@ -10,7 +10,7 @@
   <body>
   	<header class="container">
       <div class="row">
-          <div class="col-sm-0.8 text-left">
+          <div class="col-md-0.8 text-left">
               <div class="dropdown">
               <button class="dropbtn">Shop <i class="down"></i></button>
               <div class="dropdown-content">
@@ -18,21 +18,23 @@
                 <a href="/digital">Digital</a>
                 <a href="#">Chronography</a>
               </div>
-            </div>
+              </div>
             </div>
             <a style="color: black" href="{{ url_for('index') }}" class="navbar-item">
-                <h1 class="col-sm-3">QuadCore.com</h1>
+                <h1 class="col-md-3">QuadCore.com</h1>
             </a>
-            <form class="col-sm-3 form-inline">
-              <i class="fas fa-search" aria-hidden="true"></i>
-              <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
-                aria-label="Search">
-            </form>
+            <!-- <form class="col-md-4 form-inline">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+                  aria-label="Search">
+              </form> -->
             
-        <!-- <input class="col-sm-3" type="text" placeholder="Search..">
+            
+        <input class="col-sm-3 nav_search" type="text" placeholder="Search..">
     	<div class="col-sm-1">
-        <button type="submit">Submit</button>
-      </div> -->
+        <!-- <button type="submit">Submit</button> -->
+        <img src="static/images/search.png" class="submit_icon" />
+      </div>
       
         <nav class="col-sm-4" style="display: flex;
         align-items: center;">

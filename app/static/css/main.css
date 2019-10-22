@@ -68,6 +68,9 @@ button{
 
 footer {
   margin-top: 10px;
+  /* position: absolute; */
+  /* margin: 0 auto; */
+  
 }
 
 footer div {
@@ -86,8 +89,7 @@ footer ul{
 }
 
 .jumbotron {
-  height: 650px;
-  overflow: scroll;
+  height: auto;
   background-color: rgb(255, 255, 255);
   background-size: cover;
   background-position: center;
@@ -194,4 +196,24 @@ top: 70px; border: solid; border-width: 2px; left: 150px; background-color: Tran
 .container .button:hover{opacity: 100;
   background-color: rgb(255, 255, 255); 
   color: rgb(45, 66, 182); border-color: white;
+}
+
+/* nav search css */
+.nav_search {
+  border: none !important;
+  border-bottom: 3px solid #544141 !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  outline: none !important;
+
+}
+.nav_search:focus{
+  outline: none !important;
+}
+
+.submit_icon{
+  height: 0rem !important;
+  /* width: 1; */
+  margin-left: 0px !important;
+  cursor: pointer;
 }
