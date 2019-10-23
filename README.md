@@ -23,3 +23,9 @@ Step 3. Run it!!
 ```bash
 python3 main.py
 ```
+
+Note:- in case you get a "permission denied error"
+
+```bash
+sudo python3 main.py
+```
