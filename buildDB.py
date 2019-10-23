@@ -10,13 +10,17 @@ def get(url):
     content = soup.find('div',id='content')
     
     data_dict = {}
-    for table in content.find_all('table', attrs={'class':'info-table'}):
+    try:
+       for table in content.find_all('table', attrs={'class':'info-table'}):
         table_rows = table.find_all('tr')
         for tr in table_rows:
             for th in tr:
                 th = tr.find('th')
                 td = tr.find('td')
                 data_dict[th.text] = str(td.text).replace("\n","").replace("\r","")
+    except:
+        pass
+    
 
     desc = content.find('div' ,class_ = 'row')
     desc_head = desc.find_all('p')[1]
@@ -44,7 +48,7 @@ def get(url):
     return data_dict
 
 def main():
-    conn = sqlite3.connect('../project/app/site.db')
+    conn = sqlite3.connect('app/site.db')
     # conn.execute('''CREATE TABLE products
 	# 	(productId INTEGER PRIMARY KEY,
     #     name TEXT,
@@ -72,7 +76,7 @@ def main():
 	# 	)''')
 
     product_link_list = []
-    with open('product_links.txt') as fptr:
+    with open('output.txt') as fptr:
         product_link_list = json.loads(fptr.read())
 
     c = conn.cursor()
