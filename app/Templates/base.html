@@ -27,17 +27,17 @@
                 <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
                   aria-label="Search">
               </form> -->
-            
-            
+
+
         <input class="col-sm-3 nav_search" type="text" placeholder="Search..">
     	<div class="col-sm-1">
         <!-- <button type="submit">Submit</button> -->
-        <img src="static/images/search.png" class="submit_icon" />
+        <img src="/static/images/search.png" class="submit_icon" />
       </div>
-      
+
         <nav class="col-sm-4" style="display: flex;
         align-items: center;">
-            
+
             {% if current_user.is_authenticated%}
           	<div class="dropdown">
                 <button class="dropbtn">Hi, {{ current_user.username }} <i class="arrow down"></i></button>
@@ -54,19 +54,19 @@
               </div>
             {%else%}
             <a href="{{ url_for('login') }}" class="navbar-item nav">
-                Login  
+                Login
             </a>
             <a href="{{ url_for('signup') }}" class="navbar-item nav">
-                Signup  
+                Signup
             </a>
             {%endif%}
             {% if current_user.is_authenticated%}
             <a href="{{ url_for('cart') }}"  class="navbar-item">
-              <img style="width: 30px; height:20px;" src="/static/images/cart.png"> ({{noOfItem}}) 
+              <img style="width: 30px; height:20px;" src="/static/images/cart.png"> ({{noOfItem}})
             {%else%}
             <a href="{{ url_for('cart') }}"  class="navbar-item">
-                <img style="width: 30px; height:20px;" src="/static/images/cart.png"> ({{noOfItem}}) 
-        
+                <img style="width: 30px; height:20px;" src="/static/images/cart.png"> ({{noOfItem}})
+
             {%endif%}
             <a href="{{ url_for('wishlist') }}"  class="navbar-item">
                 Wishlist</a>
@@ -77,7 +77,7 @@
     <section class="jumbotron">
       <div class="container">
         <div class="row text-center">
-            
+
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
@@ -106,7 +106,7 @@
       <li class="col-sm-1">
         <img src="https://s3.amazonaws.com/codecademy-content/projects/make-a-website/lesson-4/instagram-grey.svg">
       </li>
-      
+
     </ul>
    	</div>
 	</footer>

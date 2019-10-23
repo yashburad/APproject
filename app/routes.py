@@ -12,7 +12,7 @@ from app.forms import ResetPasswordRequestForm
 from app.emailPasswordReset import send_password_reset_email
 from app.forms import ResetPasswordForm
 from app.auth import OAuthSignIn
-
+from app.emailSend import EmailClass 
 
 app.config['OAUTH_CREDENTIALS'] = {
     'google': {
@@ -209,7 +209,7 @@ def addToCart():
             #     conn.rollback()
             #     flash('Error Occured', 'Failed')
     conn.close()
-    return redirect(url_for('index'))
+    return redirect(url_for('cart'))
 
 @app.route("/RemoveFromCart")
 @login_required
@@ -241,6 +241,9 @@ def RemoveFromCart():
 @login_required
 def checkout():
     noOfItems=noOfItem()
+    if(noOfItems==0):
+        flash('Cart Empty')
+        return redirect(url_for('cart'))
     form = AddressForm()
     if form.validate_on_submit():
         current_user.name=form.name.data
@@ -257,9 +260,13 @@ def checkout():
             cur.execute("SELECT cart.productId, cart.name, cart.price, cart.image, cart.quantity FROM cart WHERE cart.userId = " + str(id))
             products = cur.fetchall()
             cur.execute("DELETE FROM cart WHERE userId = " + str(current_user.id))
+            order_email = []
             for row in products:
+                tp = [row[1], row[2], row[4]]
+                order_email.append(tp)
                 cur.execute("INSERT INTO orders (userId, productId, quantity, price) VALUES (?, ?, ?, ?)", (current_user.id, row[0],row[4],row[2]))
         flash('Your order has been placed!', 'success')
+        EmailClass.sendEmail(current_user.name, current_user.email, order_email)
         return redirect(url_for('index'))
     elif request.method == 'GET':
         form.name.data = current_user.name
@@ -358,10 +365,10 @@ def oauth_callback(provider):
         # Create the user. Try and use their name returned by Google,
         # but if it is not set, split the email address at the @.
         # username = username
-        
+
         username = email.split('@')[0]
 
-        # We can do more work here to ensure a unique nickname, if you 
+        # We can do more work here to ensure a unique nickname, if you
         # require that.
         stri=" "
         user=User(username=username, email=email,password=bcrypt.generate_password_hash(stri).decode('utf-8'))

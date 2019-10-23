@@ -59,7 +59,7 @@ class AddressForm(FlaskForm):
     address1= StringField('Address1',
                            validators=[DataRequired(), Length(min=2, max=50)])
     address2= StringField('Address2',
-                           validators=[Length(min=2, max=50)])
+                           validators=[Length(min=0, max=50)])
     city= StringField('City',
                            validators=[DataRequired(), Length(min=2, max=32)])
     state= StringField('State',
