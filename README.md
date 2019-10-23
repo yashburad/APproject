@@ -24,7 +24,7 @@ Step 3. Run it!!
 python3 main.py
 ```
 
-Note:- in case you get a "permission denied error"
+Note:- in case you get a "permission denied" error then do the following 
 
 ```bash
 sudo python3 main.py
