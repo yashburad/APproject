@@ -195,7 +195,7 @@ top: 70px; border: solid; border-width: 2px; left: 150px; background-color: Tran
 }
 .container .button:hover{opacity: 100;
   background-color: rgb(255, 255, 255); 
-  color: rgb(45, 66, 182); border-color: white;
+  color:rgb(116, 109, 99); border-color: white;
 }
 
 /* nav search css */
