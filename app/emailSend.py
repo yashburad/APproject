@@ -13,7 +13,7 @@ class EmailClass():
         total = total + (float(order_details[-1][1])*float(order_details[-1][2]))
         message = """Hey {a}! <br> <br>
                     Your order has sucessfully been placed and will be delivered to you shortly. <br> <br>
-                    Your Order Total is {c} <br>
+                    Your Order Total is Rs. {c} <br>
                     Please keep the amount ready for COD Payment. <br> <br>
                     For more details, please log onto our website. <br> <br>
                     Thank you for choosing <i> QuadCore.com </i> <br> <br>
