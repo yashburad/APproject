@@ -28,13 +28,11 @@
                   aria-label="Search">
               </form> -->
 
-
-        <input class="col-sm-3 nav_search" type="text" placeholder="Search..">
-    	<div class="col-sm-1">
-        <!-- <button type="submit">Submit</button> -->
-        <img src="/static/images/search.png" class="submit_icon" />
-      </div>
-
+<form action="{{ url_for('search') }}" method="post" name="search" class="col-md-4">        
+  <!-- <input class="col-sm-3 nav_search" type="text" placeholder="Search.."> -->
+  {{ g.search_form.search(class="nav_search", placeholder="Search...", type="text") }}
+        <input type="image" src="/static/images/search.png" alt="Submit" class="submit_icon"> 
+    </form>
         <nav class="col-sm-4" style="display: flex;
         align-items: center;">
 

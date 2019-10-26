@@ -1,6 +1,6 @@
 from app import app , db, bcrypt
-from flask import render_template, flash, redirect , url_for , request, session
-from app.forms import LoginForm, RegistrationForm , UpdateAccountForm, AddressForm
+from flask import render_template, flash, redirect , url_for , request, session , g
+from app.forms import LoginForm, RegistrationForm , UpdateAccountForm, AddressForm , SearchForm
 from app.models import User, Post
 import sqlite3
 from flask_login import login_user, current_user, logout_user, login_required
@@ -13,6 +13,7 @@ from app.emailPasswordReset import send_password_reset_email
 from app.forms import ResetPasswordForm
 from app.auth import OAuthSignIn
 from app.emailSend import EmailClass 
+from app.__init__ import searchInProducts
 
 app.config['OAUTH_CREDENTIALS'] = {
     'google': {
@@ -45,6 +46,9 @@ def noOfItem():
     else:
         return 0
 
+@app.before_request
+def before_request():
+    g.search_form = SearchForm()
 
 @app.route('/')
 @app.route('/index')
@@ -444,8 +448,9 @@ def reset_password_request():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             send_password_reset_email(user)
-        flash('Check your email for the instructions to reset your password')
-        return redirect(url_for('login'))
+            flash('Check your email for the instructions to reset your password')
+            return redirect(url_for('login'))
+        flash('Email Id not registered. Please Sign Up.')
     return render_template('reset_password_request.html',
                            title='Reset Password', form=form)
 
@@ -465,3 +470,25 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('login'))
     return render_template('reset_password.html', title = 'Reset Password', form=form)
+
+@app.route('/search', methods=['POST'])
+def search():
+    print(g.search_form.search.data)
+    search=g.search_form.search.data.lower()
+    # search=searchInProducts(g.search_form.search.data)
+    print(search)
+    data=[]
+    i=1
+    with sqlite3.connect('app/site.db') as conn:
+            cur = conn.cursor()
+            while(i<64):
+                cur.execute("SELECT productId, name, price, product_img,brand , family ,model ,produced ,materials ,glass ,diameter ,height ,wr ,color ,finish ,type ,display ,chronograph ,acoustic ,additional ,description, brand_img  FROM products WHERE productId = " +str(i) )
+                product=cur.fetchone()
+                c=product[1].lower()
+                if c.find(search) != -1:
+                    print(product[1])
+                    data.append(product)
+                i+=1
+    return render_template('productsdisplay.html', data= data, categoryName=search, noOfItem=noOfItems)
+
+

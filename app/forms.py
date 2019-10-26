@@ -78,3 +78,6 @@ class ResetPasswordForm(FlaskForm):
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
+
+class SearchForm(FlaskForm):
+    search = StringField('search', validators=[DataRequired(), Length(min=2, max=20)])

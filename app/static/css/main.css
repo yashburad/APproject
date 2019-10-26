@@ -200,6 +200,7 @@ top: 70px; border: solid; border-width: 2px; left: 150px; background-color: Tran
 
 /* nav search css */
 .nav_search {
+  margin-left: 20px;
   border: none !important;
   border-bottom: 3px solid #544141 !important;
   font-size: 15px !important;
@@ -212,8 +213,8 @@ top: 70px; border: solid; border-width: 2px; left: 150px; background-color: Tran
 }
 
 .submit_icon{
-  height: 0rem !important;
+  height: 3rem !important;
   /* width: 1; */
-  margin-left: 0px !important;
+  margin-left: 5px !important;
   cursor: pointer;
 }
