@@ -7,7 +7,8 @@
 text-align: center;
 color: white;">
 <img style="width: 1200px; height: 575px; margin-top: -40px;" src="/static/images/background.jpg" alt="Snow">
-<a href="/analogue"><button class="button" type="button">SHOP NOW</button></a>
+<form action="{{ url_for('analogue') }}">
+    <button class="button" type="submit">SHOP NOW</button> </form>
 </div>
 
 {% endblock %}
