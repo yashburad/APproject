@@ -7,6 +7,16 @@ from requests_oauthlib import OAuth2Session
 from requests.exceptions import HTTPError
 from flask_mail import Mail
 
+from whooshalchemy import IndexService
+
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.schema import Column
+from sqlalchemy.types import Integer, Text, DateTime, Float
+from sqlalchemy.engine import create_engine
+from sqlalchemy.orm.session import sessionmaker
+
+
+
 class Auth:
     """Google Project Credentials"""
     CLIENT_ID = ('356186709623-6tb84gjrptp1ss0cificl90ia45qufa4.apps.googleusercontent.com')
@@ -37,5 +47,33 @@ app.config.update(dict(
 
 mail = Mail(app)
 
+
+engine = create_engine('sqlite:///app/searchdata.db')
+Session = sessionmaker(bind=engine)
+session = Session()
+Base = declarative_base()
+
+class ProdSearch(Base):
+   __tablename__ = 'prodSearch'
+   __searchable__ = ['sprodname']  # these fields will be indexed by whoosh
+
+   sproductId = Column(Integer, primary_key=True)
+   sprodname = Column(Text)
+   # sproddesp = Column(Text)
+   # p_id = Column(Integer)
+
+   def __repr__(self):
+       return str(self.sproductId)
+       # return '{0}(name={1})'.format(self.__class__.__name__, self.name)
+
+Base.metadata.create_all(engine)
+
+config = {"WHOOSH_BASE": "D:/YVJ/Documents/Ashoka University/Monsoon 2019/Advanced Programming - Anirban Mondal/MiniProject/git-sync/APproject/app/SearchProd/whoosh"}
+index_service = IndexService(config=config, session=session)
+index_service.register_class(ProdSearch)
+
+
+def searchInProducts(s):
+    return list(ProdSearch.search_query(s))
 
 from app import routes, models

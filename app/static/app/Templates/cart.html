@@ -1,0 +1,41 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row" >
+        <h2 style="  margin-top: -40px;">Shopping Cart</h2></div>
+<div class="row col-sm-12" style="margin-bottom: 30px;">
+<ul class="col-sm-8 text-left" style="display: flex;">
+  <li class="col-sm-4">Product </li>
+   <li class="col-sm-4  text-right">Image </li>
+</ul>
+<ul class="col-sm-4 text-right" style=" display: inline;">
+<li class="col-sm-8 text-left" style="display: inline;"> Description </li>
+ <li  style="  display: inline;"> Price</li></ul>
+</div>
+{% for itemData in data %}
+<div class="row col-sm-12">
+    <table>
+        <ul class="col-sm-8 text-left" style="display: flex;">
+        <li class="col-sm-4">{{itemData[1]}} </li>
+         <li class="col-sm-4 text-center"><img style="max-width: 200px;
+            max-height: 200px;
+            margin-left: 100px;" src="{{itemData[3]}}"> </li>
+      </ul>
+      <ul class="col-sm-4 text-right" style=" display: inline;">
+      <li class="col-sm-8" style="display: inline;">  </li>
+       <li  style="  display: inline;"> {{itemData[2]}}</li>
+       <a  class="col-sm-12 text-right" style="color: cornflowerblue;" href= "/RemoveFromCart?productId={{itemData[0]}}">Remove from Cart</a>
+    </ul>
+    
+</table>
+</div>
+{% endfor %}
+
+
+<p class="col-md-12 text-right" > SubTotal: {{totalPrice}} </p> 
+</div>
+</div>
+{% endblock %}
+

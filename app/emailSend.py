@@ -1,5 +1,6 @@
 import smtplib
 import email.message
+# from threading import Thread
 
 class EmailClass():
     def sendEmail(fullname, receipt_id, order_details):
@@ -34,5 +35,8 @@ class EmailClass():
         s.sendmail(msg['From'], [msg['To']], msg.as_string())
         s.quit()
 
+# def send_async_email(app, msg):
+#     with app.app_context():
+#         mail.send(msg)
 
 # EmailClass.sendEmail("Sai Khurana", "sai.khurana_ug21@ashoka.edu.in", "Casio Watch")

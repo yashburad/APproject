@@ -1,0 +1,93 @@
+<!-- templates/signup.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row text-center">
+         <div class="row">
+    <h3 class="title" style="margin-bottom: 20px;">Update Address</h3> </div>
+    <div class="box" >
+            <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    
+                            {{ form.name.label(class="form-control-label") }}
+        
+                            {% if form.name.errors %}
+                                {{ form.name(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.name.errors %}
+                                       <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.name(class="form-control form-control-lg") }}
+                            {% endif %}
+                        
+                            {{ form.address1.label(class="form-control-label") }}
+                            {% if form.address1.errors %}
+                                {{ form.address1(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.address1.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.address1(class="form-control form-control-lg") }}
+                            {% endif %}
+                        
+                            {{ form.address2.label(class="form-control-label") }}
+                            {% if form.address2.errors %}
+                                {{ form.address2(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.address2.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.address2(class="form-control form-control-lg") }}
+                            {% endif %}
+                        
+                            {{ form.city.label(class="form-control-label") }}
+                            {% if form.city.errors %}
+                                {{ form.city(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.city.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.city(class="form-control form-control-lg") }}
+                            {% endif %}
+
+                            {{ form.state.label(class="form-control-label") }}
+                            {% if form.state.errors %}
+                                {{ form.state(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.state.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.state(class="form-control form-control-lg") }}
+                            {% endif %}
+
+                            {{ form.zipcode.label(class="form-control-label") }}
+                            {% if form.zipcode.errors %}
+                                {{ form.zipcode(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.zipcode.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.zipcode(class="form-control form-control-lg") }}
+                            {% endif %}
+                        
+                    
+                    
+                        {{ form.submit() }}
+                    </div>
+                </form>
+   
+</div>
+{% endblock %}

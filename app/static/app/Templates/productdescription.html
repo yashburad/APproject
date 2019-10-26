@@ -1,0 +1,20 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <img class="col-sm-4" style="max-width: 300px;
+        max-height: 300px" src="{{product[3]}}">
+        <p class="col-sm-4">{{product[1]}}</p>
+        <div class="col-sm-4">
+            Price: Rs{{product[2]}}
+            <a href="/addToCart?productId={{product[0]}}"> Add to Cart </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
