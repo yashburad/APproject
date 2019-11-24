@@ -83,7 +83,6 @@ def productdescription(id):
             cur = conn.cursor()
             cur.execute("SELECT productId, name, price, product_img,brand , family ,model ,produced ,materials ,glass ,diameter ,height ,wr ,color ,finish ,type ,display ,chronograph ,acoustic ,additional ,description, brand_img  FROM products WHERE productId = " +str(productId) )
             product=cur.fetchone()
-            print(product)
     conn.close()
     return render_template('productdescription.html' , product=product, noOfItem=noOfItems)
 
@@ -346,7 +345,6 @@ def RemovetoWishlist():
 
 @app.route('/authorize/<provider>')
 def oauth_authorize(provider):
-    # Flask-Login function
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
     oauth = OAuthSignIn.get_provider(provider)
@@ -360,84 +358,19 @@ def oauth_callback(provider):
     oauth = OAuthSignIn.get_provider(provider)
     email = oauth.callback()
     if email is None:
-        # I need a valid email address for my user identification
         flash('Authentication failed.')
         return redirect(url_for('index'))
-    # Look if the user already exists
     user=User.query.filter_by(email=email).first()
-    if not user:
-        # Create the user. Try and use their name returned by Google,
-        # but if it is not set, split the email address at the @.
-        # username = username
-
+    if not user:    
         username = email.split('@')[0]
-
-        # We can do more work here to ensure a unique nickname, if you
-        # require that.
         stri=" "
         user=User(username=username, email=email,password=bcrypt.generate_password_hash(stri).decode('utf-8'))
         db.session.add(user)
         db.session.commit()
-    # Log in the user, by default remembering them for their next visit
-    # unless they log out.
+   
     login_user(user, remember=True)
     return redirect(url_for('index'))
-# @app.route('/gCallback', methods=["GET"])
-# def callback():
-#     # Redirect user to home page if already logged in.
-#     if current_user is not None and current_user.is_authenticated:
-#         return redirect(url_for('index'))
-#     if 'error' in request.args:
-#         if request.args.get('error') == 'access_denied':
-#             flash('Error Occured', 'Failed')
-#             return redirect(url_for('wishlist'))
-#         flash('Error Occured', 'Failed')
-#         return redirect(url_for('wishlist'))
-#     if 'code' not in request.args and 'state' not in request.args:
-#         return redirect(url_for('login'))
-#     else:
-#         # Execution reaches here when user has
-#         # successfully authenticated our app.
-#         google = get_google_auth()
-#         auth_url, state = google.authorization_url(
-#         Auth.AUTH_URI, access_type='offline', prompt="select_account")
-#         print(state)
-#         google = OAuth2Session(Auth.CLIENT_ID, state=state)
-#         try:
-#             token = google.fetch_token(
-#                 Auth.TOKEN_URI,
-#                 client_secret=Auth.CLIENT_SECRET,
-#                 authorization_response=request.url)
-#         except HTTPError:
-#             return redirect(url_for('wishlist'))
-#         google = get_google_auth(token=token)
-#         resp = google.get(Auth.USER_INFO)
-#         if resp.status_code == 200:
-#             user_data = resp.json()
-#             email = user_data['email']
-#             user = User.query.filter_by(email=email).first()
-#             if user is None:
-#                 user = User()
-#                 user.email = email
-#             user.name = user_data['name']
-#             print(token)
-#             user.tokens = json.dumps(token)
-#             user.type="google"
-#             db.session.add(user)
-#             db.session.commit()
-#             login_user(user)
-#             return redirect(url_for('index'))
-#         return 'Could not fetch your information.'
 
-# def get_google_auth(state=None, token=None):
-#     if token:
-#         return OAuth2Session(Auth.CLIENT_ID, token=token)
-#     if state:
-#         return OAuth2Session(Auth.CLIENT_ID,state=state,redirect_uri=Auth.REDIRECT_URI)
-
-#     oauth = OAuth2Session(Auth.CLIENT_ID,redirect_uri=Auth.REDIRECT_URI,scope=Auth.SCOPE)
-
-#     return oauth
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
@@ -475,7 +408,6 @@ def reset_password(token):
 def search():
     print(g.search_form.search.data)
     search=g.search_form.search.data.lower()
-    # search=searchInProducts(g.search_form.search.data)
     print(search)
     data=[]
     i=1
