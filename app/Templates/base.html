@@ -8,19 +8,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
   <body>
-  	<header class="container">
+  	<header id="header" class="container" style="    
+    height: 100px;
+    position: fixed;
+    transition: all 0.5s ease 0s;
+    z-index: 1000;
+    background-color: white;
+    color: black;
+    width: 100%;
+    padding-top: 10px; padding-left: 160px;">
       <div class="row">
           <div class="col-md-0.8 text-left">
               <div class="dropdown">
-              <button class="dropbtn">Shop <i class="down"></i></button>
-              <div class="dropdown-content">
+              <button id="drop"  class="dropbtn" style="background-color: transparent;">Shop <i class="down"></i></button>
+              <div class="dropdown-content" style="z-index: 2;">
                 <a href="/analogue">Analogue</a>
                 <a href="/digital">Digital</a>
               </div>
               </div>
             </div>
-            <a style="color: black" href="{{ url_for('index') }}" class="navbar-item">
-                <h1 class="col-md-3">QuadCore.com</h1>
+            <a  style="color: black" href="{{ url_for('index') }}" class="navbar-item">
+                <h1  class="col-md-3">QuadCore.com</h1>
             </a>
             <!-- <form class="col-md-4 form-inline">
                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -28,17 +36,17 @@
                   aria-label="Search">
               </form> -->
 
-<form action="{{ url_for('search') }}" method="post" name="search" class="col-md-4">        
+<form action="{{ url_for('search') }}" method="post" name="search" class="col-md-4" style="left: 20px;"  >        
   <!-- <input class="col-sm-3 nav_search" type="text" placeholder="Search.."> -->
-  {{ g.search_form.search(class="nav_search", placeholder="Search...", type="text") }}
+  {{ g.search_form.search(class="nav_search", placeholder="Search...", type="text" ) }}
         <input type="image" src="/static/images/search.png" alt="Submit" class="submit_icon"> 
     </form>
         <nav class="col-sm-4" style="display: flex;
         align-items: center;">
 
             {% if current_user.is_authenticated%}
-          	<div class="dropdown">
-                <button class="dropbtn">Hi, {{ current_user.username }} <i class="arrow down"></i></button>
+          	<div  class="dropdown">
+                <button  class="dropbtn" style="background-color: transparent;">Hi, {{ current_user.username }} <i class="arrow down"></i></button>
                 <div class="dropdown-content">
                     <a href="{{ url_for('account') }}">Account</a>
                     <a href="{{ url_for('orders') }}"  class="navbar-item">
@@ -72,8 +80,8 @@
       </div>
     </header>
 
-    <section class="jumbotron">
-      <div class="container">
+    <section class="jumbotron" style="">
+      <div class="container" style="margin-top: 100px;">
         <div class="row text-center">
 
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -109,4 +117,20 @@
    	</div>
 	</footer>
   </body>
+
+<script>
+  window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+    document.getElementById("header").style.backgroundColor = "grey";
+    document.getElementById("header").style.color = "white";
+    // document.getElementById("drop").style.color = "white";  }
+  
+  } else {
+    document.getElementById("header").style.backgroundColor = "white";
+    document.getElementById("header").style.color = "black";  }
+
+}
+</script>
 </html>

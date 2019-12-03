@@ -106,7 +106,7 @@ footer ul{
 }
 
 .dropbtn {
-  background-color: #ffffff;
+  /* background-color: white; */
   color: black;
   width: auto;
   padding: 16px;
@@ -114,6 +114,7 @@ footer ul{
   border-width: 0px;
   cursor: pointer;
   margin-bottom: 2px;
+  transition: 0.5s;
 }
 
 
@@ -152,7 +153,7 @@ footer ul{
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
   background-color:rgb(0, 0, 0);
-  color: white;
+  color: black;
 }
 
 div.stars {
@@ -217,4 +218,8 @@ top: 70px; border: solid; border-width: 2px; left: 150px; background-color: Tran
   /* width: 1; */
   margin-left: 5px !important;
   cursor: pointer;
+}
+
+.nav_search{
+  background-color: transparent
 }
