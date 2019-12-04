@@ -12,8 +12,10 @@ from app.forms import ResetPasswordRequestForm
 from app.emailPasswordReset import send_password_reset_email
 from app.forms import ResetPasswordForm
 from app.auth import OAuthSignIn
-from app.emailSend import EmailClass 
+from app.emailSend import EmailClass
 from app.__init__ import searchInProducts
+from difflib import get_close_matches
+
 
 app.config['OAUTH_CREDENTIALS'] = {
     'google': {
@@ -361,13 +363,13 @@ def oauth_callback(provider):
         flash('Authentication failed.')
         return redirect(url_for('index'))
     user=User.query.filter_by(email=email).first()
-    if not user:    
+    if not user:
         username = email.split('@')[0]
         stri=" "
         user=User(username=username, email=email,password=bcrypt.generate_password_hash(stri).decode('utf-8'))
         db.session.add(user)
         db.session.commit()
-   
+
     login_user(user, remember=True)
     return redirect(url_for('index'))
 
@@ -411,6 +413,7 @@ def search():
     print(search)
     data=[]
     i=1
+    q = 0
     with sqlite3.connect('app/site.db') as conn:
             cur = conn.cursor()
             while(i<64):
@@ -420,7 +423,28 @@ def search():
                 if c.find(search) != -1:
                     print(product[1])
                     data.append(product)
+                    q = q+1
                 i+=1
+    if q==0:
+        xxx= ['Rolex', 'Datejust', 'Stainless', 'Steel', 'Diamond', 'Black', 'Oyster', 'Rolex', 'Sky-Dweller', 'Everose', 'White', 'Alligator', 'Rolex', 'Cellini', 'Time', 'Everose', 'Black', 'Alligator', 'Rolex', 'Yacht-Master', 'Everose', 'Cerachrom', 'Diamond', 'Rolex', 'Sea-Dweller', 'Stainless', 'Steel', 'Yellow', 'Gold', 'Black', 'Omega', 'Speedmaster', 'Co-Axial', 'Yellow', 'Gold', 'Rory', 'McIlroy', 'Bracelet', 'Omega', 'Seamaster', '1948', 'Small', 'Seconds', 'Platinum', 'Silver', 'Alligator', 'Omega', 'Dynamic', 'III', 'Chronograph', 'Stainless', 'Steel', 'Black', 'Red', 'Coramide', 'Longines', 'DolceVita', 'Quartz', 'Stainless', 'Steel', 'Diamond', 'Longines', 'Conquest', 'Heritage', 'Black', 'Longines', 'Equestrian', '26.5', 'Diamond', 'Black', 'IWC', 'Portuguese', 'Chrono-Rattrapante', 'Rose', 'Gold', 'Black', 'IWC', "Pilot's", 'Watch', 'Grey', 'IWC', 'Big', 'Pilot', 'ETA', 'Style', 'Stainless', 'Steel', 'Silver', 'Strap', 'Tudor', 'Heritage', 'Black', 'Bay', 'Ceramic', 'One', 'for', 'Only', 'Watch', 'ETA', 'Fastrider', 'Black', 'Shield', 'Ceramic', 'Black-Sand', 'Alcantara', 'Rolex', 'Radiomir', '47mm', 'Rolex', 'Marina', 'Militare', '6152-1', 'Crown', 'Guard', 'Panerai', 'Ferrari', 'Scuderia', 'Rattrapante', 'Patek', 'Philippe', 'Moonphase', '4968', 'White', 'Gold', 'White', 'Mother', 'Pearl', 'Patek', 'Philippe', 'Perpetual', 'Calendar', 'Chronograph', '1518', 'Patek', 'Philippe', 'Calatrava', '3718', '150th', 'Anniversary', 'Japanese', 'Market', 'Slate', 'Audemars', 'Piguet', 'Jules', 'Audemars', '15180', 'Extra-Thin', 'Pink', 'Gold', 'Black', 'Audemars', 'Piguet', 'Royal', 'Oak', 'Offshore', 'Diver', 'Stainless', 'Steel', 'White', 'Audemars', 'Piguet', 'Millenary', 'Quincy', 'Jones', 'TAG', 'Heuer', 'Khaki', 'Aviation', 'Day', 'Date', 'Stainless', 'Steel', 'Blue', 'Strap', 'Hamilton', 'Frogman', 'Auto', 'Black', 'Strap', 'Hamilton', 'Intra-Matic', 'Autochrono', 'Stainless', 'Steel', 'Blue', 'Strap', 'ETA', 'Quartz', 'Chronograph', 'Stainless', 'Steel', 'Carbon', 'Strap', 'Alpine', 'ETA', 'Couturier', 'Automatic', 'Small', 'Second', 'Stainless', 'Steel', 'Silver', 'Strap', 'Romania', 'Centenary', 'ETA', 'Gentleman', 'Powermatic', 'Stainless', 'Steel', 'Red', 'Gold', 'Cream', 'Strap', 'Glash�tte', 'Original', 'Senator', 'Observer', 'Stainless', 'Steel', 'Grey', 'Calf', 'Folding', 'Glash�tte', 'Original', 'PanoMatic', 'Lunar', 'Stainless', 'Steel', 'Rose', 'Alligator', 'Folding', 'Glash�tte', 'Original', 'SeaQ', 'Panorama', 'Date', 'Stainless', 'Steel', 'Blue', 'Textile', 'Folding', 'ETA', 'Podium', 'Big', 'Size', 'Chrono', 'Precidrive', 'PVD', 'Black', 'Strap', 'ETA', 'Action', 'Diver', 'Powermatic', 'Stainless', 'Steel', 'Black', 'Rubber', 'Sea', 'Turtle', 'Conservancy', 'ETA', 'First', 'Lady', 'Ceramic', 'Rose', 'Black', 'TAG', 'Heuer', 'Carrera', 'Calibre', 'Heuer', 'DBS', 'Edition', 'TAG', 'Heuer', 'Aquaracer', '43mm', 'Automatic', 'Titanium', 'Jungle', 'TAG', 'Heuer', 'Autavia', 'Calibre', 'Stainless', 'Steel', 'Black', 'Leather', 'Jaeger-LeCoultre', 'Rendez-Vous', 'Moon', 'Medium', 'Pink', 'Gold', 'Diamond', 'Silver', 'Jaeger-LeCoultre', 'Duom�tre', 'Chronographe', 'Pink', 'Gold', 'Silver', 'Jaeger-LeCoultre', 'Master', 'Compressor', 'Chronograph', 'Ceramic', 'Vacheron', 'Constantin', 'Patrimony', '36.5mm', 'Self-Winding', 'White', 'Gold', 'Diamond', 'Silver', 'Vacheron', 'Constantin', 'Overseas', 'Chronograph', 'Pink', 'Gold', 'Brown', 'Bracelet', 'Vacheron', 'Constantin', 'Les', 'Cabinotiers', 'Minute', 'Repeater', 'Perpetual', 'Calendar', 'Pink', 'Gold', 'Brown', 'Breitling', 'Navitimer', '1461', 'Stainless', 'Steel', 'Black', 'Croco', 'Pin', 'Breitling', 'Superocean', 'Heritage', 'Chronograph', 'Stainless', 'Steel', 'Black', 'Black', 'Croco', 'Folding', 'Breitling', 'Transocean', 'Chronograph', 'Stainless', 'Steel', 'Panda', 'Croco', 'Folding', 'Apple', 'Watch', '38mm', 'Apple', 'Watch', '38mm', 'Apple', 'Watch', '38mm', 'Apple', 'Watch', 'Sport', 'Rose', 'Gold', '42mm', 'Apple', 'Watch', 'Edition', '42mm', 'Apple', 'Watch', 'Edition', '42mm', 'Apple', 'Watch', 'Sport', '38mm', 'Apple', 'Watch', 'Sport', 'Gold', '42mm', 'Casio', 'GD-X6900PM-1', 'Electric', 'Casio', 'DW-6900DS-1', 'Black', 'Diamond', 'Pattern', 'Casio', 'DW-6900HM-2', 'Navy', 'Blue', 'Brushed', 'Steel', 'Casio', 'GD-X6900-1', 'Black', 'Casio', 'DW-6900WW-7', 'Basic', 'White', 'Casio', 'GA-100C-8A', 'Blue', 'Hands', 'Casio', 'G-Shock', 'Mudmaster', 'Twin', 'Sensor', 'Black', 'Green', 'Casio', 'G-Shock', 'Mudmaster', 'Triple', 'Sensor', 'Black', 'Black', 'Casio', 'G-Shock', 'Mudmaster', 'Triple', 'Sensor', 'Black', 'Yellow', 'Casio', 'G-Shock', 'Mudmaster', 'Triple', 'Sensor', 'Black', 'Red', 'Casio', 'G-Shock', 'Mudmaster', 'Twin', 'Sensor', 'Black', 'Beige', 'ETA', 'T-Touch', 'Expert', 'Carbon', 'Rubber', 'ETA', 'T-Touch', 'Orange', 'Rubber', 'ETA', 'T-Touch', 'Black', 'Rubber', 'ETA', 'T-Touch', 'Expert', 'Solar', 'Ti/', 'Rubber', 'ETA', 'T-Touch', 'Expert', 'Leather', 'ETA', 'T-Touch', 'Black', 'Bracelet']
+        tt = get_close_matches(search, xxx, 1)
+        tt=tt[0].lower()
+        print(tt)
+        flash("No Results Found. Showing Results For " + tt)
+        print("XXXXx")
+        data=[]
+        i=1
+        with sqlite3.connect('app/site.db') as conn:
+                cur = conn.cursor()
+                while(i<64):
+                    print(i)
+                    cur.execute("SELECT productId, name, price, product_img,brand , family ,model ,produced ,materials ,glass ,diameter ,height ,wr ,color ,finish ,type ,display ,chronograph ,acoustic ,additional ,description, brand_img  FROM products WHERE productId = " +str(i) )
+                    product=cur.fetchone()
+                    c=product[1].lower()
+                    if c.find(str(tt)) != -1:
+                        print(product[1])
+                        data.append(product)
+                    i+=1
+
+
     return render_template('productsdisplay.html', data= data, categoryName=search, noOfItem=noOfItems)
-
-
